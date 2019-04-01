@@ -1,5 +1,6 @@
 package teste.com.quizapp.Login;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import teste.com.quizapp.Login.Presenter.LoginPresenter;
+import teste.com.quizapp.Quiz.QuizActivity;
 import teste.com.quizapp.R;
 import teste.com.quizapp.Login.View.ILoginView;
 
@@ -18,7 +20,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     TextInputLayout textInputLayout;
 
 
-    public LoginPresenter loginPresenter;
+    private LoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
 
     @Override
     public void beginQuiz() {
-
+        startActivity(new Intent(LoginActivity.this,QuizActivity.class));
     }
 }

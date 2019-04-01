@@ -7,13 +7,13 @@
     tools:context=".Quiz.QuizActivity">
 
     <TextView
-        android:id="@+id/questionNumberTextView"
+        android:id="@+id/categoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large_margin"
-        android:text="@string/question_number"
-        android:textStyle="bold"
+        android:text="@string/category"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,58 +25,64 @@
         android:layout_marginStart="@dimen/custom_margin"
         android:layout_marginTop="@dimen/large_margin"
         android:layout_marginEnd="@dimen/custom_margin"
-        tools:text="@string/question_description"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionNumberTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/categoryTextView"
+        tools:text="@string/question_description" />
 
-    <ListView
-        android:id="@+id/answersListView"
+    <RadioGroup
+        android:id="@+id/questionRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/custom_margin"
         android:layout_marginTop="@dimen/custom_margin"
         android:layout_marginEnd="@dimen/custom_margin"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/nextButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionDescriptionTextView"
-        tools:text="@string/question_description"
-        tools:listitem="@tools:sample/cities"/>
+        app:layout_constraintTop_toBottomOf="@+id/questionDescriptionTextView" />
 
-
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/questionsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/custom_margin"
-        android:layout_marginTop="@dimen/large_margin"
         android:layout_marginEnd="@dimen/custom_margin"
+        android:layout_marginBottom="@dimen/custom_margin"
         android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answersListView">
-
-        <LinearLayout
-            android:id="@+id/questions_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/custom_margin"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
-
-    <Button
-        android:id="@+id/beginButton"
-        android:layout_width="@dimen/logo_size"
-        android:layout_height="50dp"
-        android:layout_marginTop="@dimen/custom_margin"
-        android:background="@drawable/rounded_corners_button"
-        android:text="@string/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="@dimen/buttons_size"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_corners_button"
+        android:text="@string/send"
+        app:layout_constraintBottom_toTopOf="@+id/questionsRecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/nextButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="@dimen/buttons_size"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_corners_button"
+        android:text="@string/next"
+        android:enabled="false"
+        app:layout_constraintBottom_toTopOf="@+id/questionsRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/sendButton" />
 
 </android.support.constraint.ConstraintLayout>

@@ -4,7 +4,8 @@
     <string name="begin_quiz">Iniciar Quiz</string>
     <string name="empty_username">Por favor, insira um nome de usuário</string>
     <string name="invalid_username_length">Por favor, insira um nome com menos de 30 caracteres</string>
-    <string name="question_number">Pergunta %d/%d</string>
+    <string name="category">Categoria</string>
     <string name="question_description">%d) Descrição da pergunta</string>
     <string name="next">Próxima</string>
+    <string name="send">Enviar</string>
 </resources>

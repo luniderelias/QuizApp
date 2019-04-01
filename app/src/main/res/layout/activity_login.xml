@@ -22,6 +22,8 @@
         android:id="@+id/usernameInputLayout"
         android:layout_width="@dimen/logo_size"
         android:layout_height="wrap_content"
+        android:nextFocusDown="@id/beginButton"
+        android:nextFocusForward="@id/beginButton"
         app:layout_constraintBottom_toTopOf="@+id/beginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
