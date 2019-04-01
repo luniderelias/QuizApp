@@ -6,7 +6,6 @@ import teste.com.quizapp.Login.View.ILoginView;
 
 import static teste.com.quizapp.Model.User.User.EMPTY_USERNAME_CODE;
 import static teste.com.quizapp.Model.User.User.INVALID_USERNAME_LENGTH_CODE;
-import static teste.com.quizapp.Model.User.User.MAX_USERNAME_LENGTH;
 import static teste.com.quizapp.Model.User.User.VALID_USERNAME_CODE;
 
 public class LoginPresenter implements ILoginPresenter {
