@@ -27,10 +27,10 @@ dependencies {
     testImplementation 'androidx.test:core:1.1.0'
     testImplementation 'org.mockito:mockito-inline:2.13.0'
 
-    androidTestImplementation("com.android.support.test:runner:$testRunnerVersion"){
+    androidTestImplementation("com.android.support.test:runner:$testRunnerVersion") {
         exclude module: 'support-annotations'
     }
-    androidTestImplementation("com.android.support.test:rules:$testRunnerVersion"){
+    androidTestImplementation("com.android.support.test:rules:$testRunnerVersion") {
         exclude module: 'support-annotations'
     }
 
@@ -44,7 +44,6 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
-
 
 
 }

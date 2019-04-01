@@ -2,4 +2,5 @@
 <resources>
     <dimen name="logo_size">200dp</dimen>
     <dimen name="custom_margin">8dp</dimen>
+    <dimen name="large_margin">16dp</dimen>
 </resources>
