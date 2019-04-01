@@ -2,4 +2,6 @@
     <string name="app_name">QuizApp</string>
     <string name="username">Nome de Usuário</string>
     <string name="begin_quiz">Iniciar Quiz</string>
+    <string name="empty_username">Por favor, insira um nome de usuário</string>
+    <string name="invalid_username_length">Por favor, insira um nome com menos de 30 caracteres</string>
 </resources>
