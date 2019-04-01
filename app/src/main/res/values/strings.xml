@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">QuizApp</string>
+    <string name="username">Nome de Usuário</string>
+    <string name="begin_quiz">Iniciar Quiz</string>
 </resources>
