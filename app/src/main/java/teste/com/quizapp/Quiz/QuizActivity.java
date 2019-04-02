@@ -52,7 +52,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
         ButterKnife.bind(this);
         quizPresenter = new QuizPresenter(this);
 
-        quizPresenter.getQuestions();
+        quizPresenter.getNextQuestion();
     }
 
 
@@ -87,7 +87,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
 
     @OnClick(R.id.sendButton)
     void onSendAnswer(View v){
-        quizPresenter.answerQuestion();
+        quizPresenter.answerQuestion(((TextView) findViewById(optionsRadioGroup.getCheckedRadioButtonId())).getText().toString());
         v.setEnabled(false);
         nextButton.setEnabled(true);
     }
@@ -95,6 +95,6 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
     void onNextQuestion(View v){
         v.setEnabled(false);
         sendButton.setEnabled(true);
-        quizPresenter.goToNextQuestion();
+        quizPresenter.getNextQuestion();
     }
 }

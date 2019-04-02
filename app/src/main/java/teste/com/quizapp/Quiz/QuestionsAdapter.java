@@ -35,7 +35,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
 
     @Override
     public int getItemCount() {
-        return Cache.questions.size();
+        return 10;
     }
 
     @Override
@@ -47,18 +47,24 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
     }
 
     public void setBackgroundColor(int position){
-        switch (Cache.questions.get(position).getResult()){
-            case NOT_ANSWERED_CODE:
-                viewHolder.questionNumber.setBackgroundColor(context
-                        .getResources().getColor(android.R.color.holo_blue_light));
-                break;
-            case RIGHT_ANSWER_CODE:
-                viewHolder.questionNumber.setBackgroundColor(context
-                        .getResources().getColor(R.color.colorPrimaryLight));       break;
-            case WRONG_ANSWER_CODE:
-                viewHolder.questionNumber.setBackgroundColor(context
-                        .getResources().getColor(android.R.color.holo_red_light));
-                break;
+        if(position >= Cache.questions.size())
+            viewHolder.questionNumber.setBackgroundColor(context
+                    .getResources().getColor(android.R.color.darker_gray));
+        else {
+            switch (Cache.questions.get(position).getResult()) {
+                case NOT_ANSWERED_CODE:
+                    viewHolder.questionNumber.setBackgroundColor(context
+                            .getResources().getColor(android.R.color.holo_blue_light));
+                    break;
+                case RIGHT_ANSWER_CODE:
+                    viewHolder.questionNumber.setBackgroundColor(context
+                            .getResources().getColor(R.color.colorPrimaryLight));
+                    break;
+                case WRONG_ANSWER_CODE:
+                    viewHolder.questionNumber.setBackgroundColor(context
+                            .getResources().getColor(android.R.color.holo_red_light));
+                    break;
+            }
         }
     }
 
