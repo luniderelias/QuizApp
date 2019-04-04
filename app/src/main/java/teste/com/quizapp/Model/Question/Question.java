@@ -1,21 +1,25 @@
 package teste.com.quizapp.Model.Question;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Question {
 
+    @SerializedName("id")
+    @Expose
     private String id;
-    private String question;
-    private String category;
+    @SerializedName("statement")
+    @Expose
+    private String statement;
+    @SerializedName("options")
+    @Expose
     private String[] options;
-    private int result;
+    private Boolean result;
 
-    public final static int NOT_ANSWERED_CODE = 0;
-    public final static int RIGHT_ANSWER_CODE = 1;
-    public final static int WRONG_ANSWER_CODE = 2;
 
-    public Question(String id, String question, String category, String[] options) {
+    public Question(String id, String statement, String[] options) {
         this.id = id;
-        this.question = question;
-        this.category = category;
+        this.statement = statement;
         this.options = options;
     }
 
@@ -30,31 +34,23 @@ public class Question {
         this.id = id;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getStatement() {
+        return statement;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
+    public void setStatement(String statement) {
+        this.statement = statement;
     }
 
     public String[] getOptions() {
         return options;
     }
 
-    public int getResult() {
+    public Boolean getResult() {
         return result;
     }
 
-    public void setResult(int result) {
+    public void setResult(Boolean result) {
         this.result = result;
     }
 

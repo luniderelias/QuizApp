@@ -7,7 +7,7 @@
     tools:context=".Quiz.QuizActivity">
 
     <TextView
-        android:id="@+id/categoryTextView"
+        android:id="@+id/questionNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large_margin"
@@ -28,7 +28,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryTextView"
+        app:layout_constraintTop_toBottomOf="@+id/questionNumberTextView"
         tools:text="@string/question_description" />
 
     <RadioGroup
@@ -36,11 +36,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/custom_margin"
-        android:layout_marginTop="@dimen/custom_margin"
+        android:layout_marginTop="@dimen/large_margin"
         android:layout_marginEnd="@dimen/custom_margin"
-        android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/nextButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionDescriptionTextView" />
@@ -84,5 +82,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/sendButton" />
+
+
+    <ImageView
+        android:id="@+id/loadingImageView"
+        android:layout_width="@dimen/question_size"
+        android:layout_height="@dimen/question_size"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/loading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

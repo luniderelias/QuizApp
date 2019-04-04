@@ -12,9 +12,6 @@ import android.widget.TextView;
 import teste.com.quizapp.R;
 import teste.com.quizapp.Util.Cache;
 
-import static teste.com.quizapp.Model.Question.Question.NOT_ANSWERED_CODE;
-import static teste.com.quizapp.Model.Question.Question.RIGHT_ANSWER_CODE;
-import static teste.com.quizapp.Model.Question.Question.WRONG_ANSWER_CODE;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.ViewHolder> {
 
@@ -42,30 +39,23 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         viewHolder = holder;
         viewHolder.setIsRecyclable(false);
-        viewHolder.questionNumber.setText(String.valueOf(position+1));
+        viewHolder.questionNumber.setText(String.valueOf(position + 1));
         setBackgroundColor(position);
     }
 
-    public void setBackgroundColor(int position){
-        if(position >= Cache.questions.size())
+    public void setBackgroundColor(int position) {
+        if (position >= Cache.questions.size())
             viewHolder.questionNumber.setBackgroundColor(context
                     .getResources().getColor(android.R.color.darker_gray));
-        else {
-            switch (Cache.questions.get(position).getResult()) {
-                case NOT_ANSWERED_CODE:
-                    viewHolder.questionNumber.setBackgroundColor(context
-                            .getResources().getColor(android.R.color.holo_blue_light));
-                    break;
-                case RIGHT_ANSWER_CODE:
-                    viewHolder.questionNumber.setBackgroundColor(context
-                            .getResources().getColor(R.color.colorPrimaryLight));
-                    break;
-                case WRONG_ANSWER_CODE:
-                    viewHolder.questionNumber.setBackgroundColor(context
-                            .getResources().getColor(android.R.color.holo_red_light));
-                    break;
-            }
-        }
+        else if (Cache.questions.get(position).getResult() == null)
+            viewHolder.questionNumber.setBackgroundColor(context
+                    .getResources().getColor(android.R.color.holo_blue_light));
+        else if (Cache.questions.get(position).getResult())
+            viewHolder.questionNumber.setBackgroundColor(context
+                    .getResources().getColor(R.color.colorPrimaryLight));
+        else
+            viewHolder.questionNumber.setBackgroundColor(context
+                    .getResources().getColor(android.R.color.holo_red_light));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
