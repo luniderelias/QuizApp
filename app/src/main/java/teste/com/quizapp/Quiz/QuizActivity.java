@@ -1,8 +1,10 @@
 package teste.com.quizapp.Quiz;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_CORRECT_AN
 import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_GET_NEW_QUESTION_FAILED_CODE;
 import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_INCORRECT_ANSWER_RESULT_CODE;
 import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_NOT_CONNECTED_CODE;
+import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_QUESTION_NOT_ANSWERED_CODE;
 import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_SEND_ANSWER_FAILED_CODE;
 
 public class QuizActivity extends AppCompatActivity implements IQuizView {
@@ -62,7 +65,6 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
     ImageView loadingImageView;
 
     RadioGroup optionsRadioGroup;
-
 
 
     @Override
@@ -143,6 +145,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
                 correctAnswerSnackbar.getView().setBackgroundColor(getResources()
                         .getColor(R.color.colorPrimaryLight));
                 correctAnswerSnackbar.show();
+                setHorizontalScrollQuestions();
                 break;
             case SNACKBAR_INCORRECT_ANSWER_RESULT_CODE:
                 Snackbar incorrectAnswerSnackbar = Snackbar.make(questionsRecyclerView,
@@ -151,6 +154,15 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
                 incorrectAnswerSnackbar.getView().setBackgroundColor(getResources()
                         .getColor(android.R.color.holo_red_light));
                 incorrectAnswerSnackbar.show();
+                setHorizontalScrollQuestions();
+                break;
+            case SNACKBAR_QUESTION_NOT_ANSWERED_CODE:
+                Snackbar questionNotAnsweredSnackbar = Snackbar.make(questionsRecyclerView,
+                        getString(R.string.question_not_answered),
+                        Snackbar.LENGTH_SHORT);
+                questionNotAnsweredSnackbar.getView().setBackgroundColor(getResources()
+                        .getColor(android.R.color.holo_orange_light));
+                questionNotAnsweredSnackbar.show();
                 break;
         }
     }
@@ -162,6 +174,12 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
 
     @OnClick(R.id.sendButton)
     void onSendAnswer(View v) {
+        TextView answerTextView = findViewById(optionsRadioGroup
+                .getCheckedRadioButtonId());
+        if(answerTextView == null) {
+            showSnackbar(SNACKBAR_QUESTION_NOT_ANSWERED_CODE);
+            return;
+        }
         Answer answer = new Answer(((TextView) findViewById(optionsRadioGroup
                 .getCheckedRadioButtonId())).getText().toString());
 
@@ -178,7 +196,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
     }
 
     @Override
-    public void setUpLoading(){
+    public void setUpLoading() {
         Glide.with(this)
                 .load(R.drawable.loading)
                 .placeholder(R.drawable.loading)
@@ -187,10 +205,24 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
 
     @Override
     public void setLoadingVisibility(boolean visible) {
-        if(visible)
+        if (visible)
             loadingImageView.setVisibility(View.VISIBLE);
         else
             loadingImageView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showFinishedDialog(int score) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getResources().getString(R.string.quiz_ended));
+        alertDialog.setMessage(getResources().getString(R.string.score_is, score));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getResources().getString(R.string.begin_new_quiz),
+                (dialog, which) -> {
+                    finish();
+                    startActivity(new Intent(this,QuizActivity.class));
+                    dialog.dismiss();
+                });
+        alertDialog.show();
     }
 
 

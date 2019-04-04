@@ -1,6 +1,8 @@
 package teste.com.quizapp.Quiz.Presenter;
 
 
+import java.util.ArrayList;
+
 import teste.com.quizapp.Model.Answer.Answer;
 import teste.com.quizapp.Model.Question.Question;
 import teste.com.quizapp.Quiz.View.IQuizView;
@@ -11,7 +13,7 @@ import teste.com.quizapp.Util.Service.QuizService;
 
 public class QuizPresenter implements IQuizPresenter {
 
-    private int currentQuestionNumber = -1;
+    private int currentQuestionNumber = 0;
 
     private IQuizView quizView;
     public final static int SNACKBAR_NOT_CONNECTED_CODE = 0;
@@ -19,6 +21,7 @@ public class QuizPresenter implements IQuizPresenter {
     public final static int SNACKBAR_SEND_ANSWER_FAILED_CODE = 2;
     public final static int SNACKBAR_CORRECT_ANSWER_RESULT_CODE = 3;
     public final static int SNACKBAR_INCORRECT_ANSWER_RESULT_CODE = 4;
+    public final static int SNACKBAR_QUESTION_NOT_ANSWERED_CODE = 5;
 
 
     public QuizPresenter(IQuizView quizView) {
@@ -31,20 +34,25 @@ public class QuizPresenter implements IQuizPresenter {
         quizView.setLoadingVisibility(true);
         if (quizView.checkConnection()) {
             currentQuestionNumber = Cache.questions.size();
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    QuizService.getNextQuestion()
-                            .onErrorResumeNext(response -> {
-                                quizView.showSnackbar(SNACKBAR_GET_NEW_QUESTION_FAILED_CODE);
-                                quizView.setLoadingVisibility(false);
-                            }).subscribe(response -> {
-                        setQuestion(response);
-                        quizView.setLoadingVisibility(false);
-                    }).isDisposed();
-                }
-            };
-            thread.start();
+            if(currentQuestionNumber >= 10) {
+                Cache.questions = new ArrayList<>();
+                quizView.showFinishedDialog(getScore());
+            }else {
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        QuizService.getNextQuestion()
+                                .onErrorResumeNext(response -> {
+                                    quizView.showSnackbar(SNACKBAR_GET_NEW_QUESTION_FAILED_CODE);
+                                    quizView.setLoadingVisibility(false);
+                                }).subscribe(response -> {
+                            setQuestion(response);
+                            quizView.setLoadingVisibility(false);
+                        }).isDisposed();
+                    }
+                };
+                thread.start();
+            }
         } else {
             quizView.showSnackbar(SNACKBAR_NOT_CONNECTED_CODE);
             quizView.setLoadingVisibility(false);
@@ -86,5 +94,15 @@ public class QuizPresenter implements IQuizPresenter {
             quizView.showSnackbar(SNACKBAR_NOT_CONNECTED_CODE);
             quizView.setLoadingVisibility(false);
         }
+    }
+
+    @Override
+    public int getScore() {
+        int score = 0;
+        for (Question question:Cache.questions) {
+            if(question.getResult())
+                score++;
+        }
+        return score;
     }
 }

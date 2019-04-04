@@ -13,4 +13,5 @@ public interface IQuizView {
     boolean checkConnection();
     void setUpLoading();
     void setLoadingVisibility(boolean visible);
+    void showFinishedDialog(int score);
 }

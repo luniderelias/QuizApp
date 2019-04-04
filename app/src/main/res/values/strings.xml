@@ -4,7 +4,7 @@
     <string name="begin_quiz">Iniciar Quiz</string>
     <string name="empty_username">Por favor, insira um nome de usuário</string>
     <string name="invalid_username_length">Por favor, insira um nome com menos de 30 caracteres</string>
-    <string name="category">Categoria</string>
+    <string name="question_number_example">Pergunta 3/10</string>
     <string name="question_description">%d) Descrição da pergunta</string>
     <string name="next">Próxima</string>
     <string name="send">Enviar</string>
@@ -14,4 +14,8 @@
     <string name="try_again">Tentar novamente</string>
     <string name="correct_answer">Resposta correta</string>
     <string name="incorrect_answer">Resposta incorreta</string>
+    <string name="question_not_answered">Por favor, escolha uma resposta</string>
+    <string name="quiz_ended">Fim do Quiz</string>
+    <string name="score_is">Você acertou %d de 10 perguntas</string>
+    <string name="begin_new_quiz">Começar novo Quiz</string>
 </resources>
