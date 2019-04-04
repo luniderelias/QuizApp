@@ -3,7 +3,9 @@ package teste.com.quizapp.Model.Question;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Question {
+import teste.com.quizapp.Quiz.Presenter.IQuizPresenter;
+
+public class Question implements IQuestion {
 
     @SerializedName("id")
     @Expose

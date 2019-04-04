@@ -76,9 +76,9 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
         setUpLoading();
         quizPresenter = new QuizPresenter(this);
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             quizPresenter.recoverInstanceState();
-        }else {
+        } else {
             quizPresenter.getNextQuestion();
         }
     }
@@ -93,7 +93,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
 
     @Override
     public void setCurrentQuestion(Question question) {
-        String questionNumber = getString(R.string.question_number, Cache.questions.indexOf(question)+1);
+        String questionNumber = getString(R.string.question_number, Cache.questions.indexOf(question) + 1);
         questionNumberTextView.setText(questionNumber);
         questionDescriptionTextView.setText(question.getStatement());
         setQuestionOptions(question.getOptions());
@@ -140,6 +140,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
                         .setAction(R.string.try_again, view -> onSendAnswer(sendButton))
                         .setActionTextColor(getResources()
                                 .getColor(R.color.colorPrimaryLight)).show();
+                sendButton.setEnabled(true);
                 break;
             case SNACKBAR_CORRECT_ANSWER_RESULT_CODE:
                 Snackbar correctAnswerSnackbar = Snackbar.make(questionsRecyclerView,
@@ -149,6 +150,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
                         .getColor(R.color.colorPrimaryLight));
                 correctAnswerSnackbar.show();
                 setHorizontalScrollQuestions();
+                nextButton.setEnabled(true);
                 break;
             case SNACKBAR_INCORRECT_ANSWER_RESULT_CODE:
                 Snackbar incorrectAnswerSnackbar = Snackbar.make(questionsRecyclerView,
@@ -158,6 +160,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
                         .getColor(android.R.color.holo_red_light));
                 incorrectAnswerSnackbar.show();
                 setHorizontalScrollQuestions();
+                nextButton.setEnabled(true);
                 break;
             case SNACKBAR_QUESTION_NOT_ANSWERED_CODE:
                 Snackbar questionNotAnsweredSnackbar = Snackbar.make(questionsRecyclerView,
@@ -166,6 +169,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
                 questionNotAnsweredSnackbar.getView().setBackgroundColor(getResources()
                         .getColor(android.R.color.holo_orange_light));
                 questionNotAnsweredSnackbar.show();
+                sendButton.setEnabled(true);
                 break;
         }
     }
@@ -179,7 +183,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
     void onSendAnswer(View v) {
         TextView answerTextView = findViewById(optionsRadioGroup
                 .getCheckedRadioButtonId());
-        if(answerTextView == null) {
+        if (answerTextView == null) {
             showSnackbar(SNACKBAR_QUESTION_NOT_ANSWERED_CODE);
             return;
         }
@@ -188,7 +192,6 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
 
         quizPresenter.answerQuestion(answer);
         v.setEnabled(false);
-        nextButton.setEnabled(true);
     }
 
     @OnClick(R.id.nextButton)
@@ -223,7 +226,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getResources().getString(R.string.begin_new_quiz),
                 (dialog, which) -> {
                     finish();
-                    startActivity(new Intent(this,QuizActivity.class));
+                    startActivity(new Intent(this, QuizActivity.class));
                     dialog.dismiss();
                 });
         alertDialog.show();
