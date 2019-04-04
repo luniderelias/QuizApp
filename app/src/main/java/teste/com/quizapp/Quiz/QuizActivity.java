@@ -1,6 +1,5 @@
 package teste.com.quizapp.Quiz;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
@@ -32,16 +31,14 @@ import teste.com.quizapp.R;
 import teste.com.quizapp.Util.Cache;
 import teste.com.quizapp.Util.ConnectivityUtil;
 
-import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_CORRECT_ANSWER_RESULT_CODE;
-import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_GET_NEW_QUESTION_FAILED_CODE;
-import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_INCORRECT_ANSWER_RESULT_CODE;
-import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_NOT_CONNECTED_CODE;
-import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_QUESTION_NOT_ANSWERED_CODE;
-import static teste.com.quizapp.Quiz.Presenter.QuizPresenter.SNACKBAR_SEND_ANSWER_FAILED_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_CORRECT_ANSWER_RESULT_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_GET_NEW_QUESTION_FAILED_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_INCORRECT_ANSWER_RESULT_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_NOT_CONNECTED_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_QUESTION_NOT_ANSWERED_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_SEND_ANSWER_FAILED_CODE;
 
 public class QuizActivity extends AppCompatActivity implements IQuizView {
-
-    private QuizPresenter quizPresenter;
 
     @BindView(R.id.questionNumberTextView)
     TextView questionNumberTextView;
@@ -64,7 +61,9 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
     @BindView(R.id.loadingImageView)
     ImageView loadingImageView;
 
-    RadioGroup optionsRadioGroup;
+    private RadioGroup optionsRadioGroup;
+    private LinearLayoutManager layoutManager;
+    private QuizPresenter quizPresenter;
 
 
     @Override
@@ -73,24 +72,28 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
         setContentView(R.layout.activity_quiz);
         ButterKnife.bind(this);
 
-        setUpLoading();
 
+        setUpLoading();
         quizPresenter = new QuizPresenter(this);
 
-        quizPresenter.getNextQuestion();
+        if(savedInstanceState != null){
+            quizPresenter.recoverInstanceState();
+        }else {
+            quizPresenter.getNextQuestion();
+        }
     }
 
 
     @Override
     public void setHorizontalScrollQuestions() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         questionsRecyclerView.setLayoutManager(layoutManager);
         questionsRecyclerView.setAdapter(new QuestionsAdapter(this));
     }
 
     @Override
     public void setCurrentQuestion(Question question) {
-        String questionNumber = String.valueOf(Cache.questions.indexOf(question)) + "/10";
+        String questionNumber = getString(R.string.question_number, Cache.questions.indexOf(question)+1);
         questionNumberTextView.setText(questionNumber);
         questionDescriptionTextView.setText(question.getStatement());
         setQuestionOptions(question.getOptions());
@@ -201,6 +204,7 @@ public class QuizActivity extends AppCompatActivity implements IQuizView {
                 .load(R.drawable.loading)
                 .placeholder(R.drawable.loading)
                 .into(loadingImageView);
+        loadingImageView.setVisibility(View.GONE);
     }
 
     @Override

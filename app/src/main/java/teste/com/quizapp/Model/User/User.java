@@ -1,11 +1,12 @@
 package teste.com.quizapp.Model.User;
 
+import static teste.com.quizapp.Util.Constants.EMPTY_USERNAME_CODE;
+import static teste.com.quizapp.Util.Constants.INVALID_USERNAME_LENGTH_CODE;
+import static teste.com.quizapp.Util.Constants.MAX_USERNAME_LENGTH;
+import static teste.com.quizapp.Util.Constants.VALID_USERNAME_CODE;
+
 public class User implements IUser {
 
-    public final static int VALID_USERNAME_CODE = 0;
-    public final static int EMPTY_USERNAME_CODE = 1;
-    public final static int INVALID_USERNAME_LENGTH_CODE = 2;
-    public final static int MAX_USERNAME_LENGTH = 30;
     private String username;
 
     public User(String username) {

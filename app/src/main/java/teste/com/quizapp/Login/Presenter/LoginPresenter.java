@@ -4,9 +4,10 @@ import teste.com.quizapp.Model.User.User;
 import teste.com.quizapp.R;
 import teste.com.quizapp.Login.View.ILoginView;
 
-import static teste.com.quizapp.Model.User.User.EMPTY_USERNAME_CODE;
-import static teste.com.quizapp.Model.User.User.INVALID_USERNAME_LENGTH_CODE;
-import static teste.com.quizapp.Model.User.User.VALID_USERNAME_CODE;
+import static teste.com.quizapp.Util.Constants.EMPTY_USERNAME_CODE;
+import static teste.com.quizapp.Util.Constants.INVALID_USERNAME_LENGTH_CODE;
+import static teste.com.quizapp.Util.Constants.VALID_USERNAME_CODE;
+
 
 public class LoginPresenter implements ILoginPresenter {
 

@@ -6,6 +6,7 @@ android {
         applicationId "teste.com.quizapp"
         minSdkVersion 19
         targetSdkVersion 28
+        multiDexEnabled true //important
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -55,6 +56,9 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+    androidTestImplementation 'com.crittercism.dexmaker:dexmaker:1.4'
+    androidTestImplementation 'com.crittercism.dexmaker:dexmaker-dx:1.4'
+
 
 
 }

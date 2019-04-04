@@ -1,27 +1,25 @@
 package teste.com.quizapp.Quiz.Presenter;
 
 
+
 import java.util.ArrayList;
 
 import teste.com.quizapp.Model.Answer.Answer;
 import teste.com.quizapp.Model.Question.Question;
 import teste.com.quizapp.Quiz.View.IQuizView;
 import teste.com.quizapp.Util.Cache;
-import teste.com.quizapp.Util.ConnectivityUtil;
 import teste.com.quizapp.Util.Service.QuizService;
+
+import static teste.com.quizapp.Util.Constants.SNACKBAR_CORRECT_ANSWER_RESULT_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_GET_NEW_QUESTION_FAILED_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_INCORRECT_ANSWER_RESULT_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_NOT_CONNECTED_CODE;
+import static teste.com.quizapp.Util.Constants.SNACKBAR_SEND_ANSWER_FAILED_CODE;
 
 
 public class QuizPresenter implements IQuizPresenter {
 
-    private int currentQuestionNumber = 0;
-
     private IQuizView quizView;
-    public final static int SNACKBAR_NOT_CONNECTED_CODE = 0;
-    public final static int SNACKBAR_GET_NEW_QUESTION_FAILED_CODE = 1;
-    public final static int SNACKBAR_SEND_ANSWER_FAILED_CODE = 2;
-    public final static int SNACKBAR_CORRECT_ANSWER_RESULT_CODE = 3;
-    public final static int SNACKBAR_INCORRECT_ANSWER_RESULT_CODE = 4;
-    public final static int SNACKBAR_QUESTION_NOT_ANSWERED_CODE = 5;
 
 
     public QuizPresenter(IQuizView quizView) {
@@ -33,8 +31,7 @@ public class QuizPresenter implements IQuizPresenter {
     public void getNextQuestion() {
         quizView.setLoadingVisibility(true);
         if (quizView.checkConnection()) {
-            currentQuestionNumber = Cache.questions.size();
-            if(currentQuestionNumber >= 10) {
+            if(Cache.questions.size() >= 10) {
                 Cache.questions = new ArrayList<>();
                 quizView.showFinishedDialog(getScore());
             }else {
@@ -64,7 +61,7 @@ public class QuizPresenter implements IQuizPresenter {
     public void setQuestion(Question question) {
         Cache.questions.add(question);
         quizView.setHorizontalScrollQuestions();
-        quizView.setCurrentQuestion(Cache.questions.get(currentQuestionNumber));
+        quizView.setCurrentQuestion(Cache.questions.get(Cache.questions.size()-1));
     }
 
     @Override
@@ -74,12 +71,12 @@ public class QuizPresenter implements IQuizPresenter {
             Thread thread = new Thread() {
                 @Override
                 public void run() {
-                    QuizService.postAnswer(Cache.questions.get(currentQuestionNumber), answer)
+                    QuizService.postAnswer(Cache.questions.get(Cache.questions.size()-1), answer)
                             .onErrorResumeNext(response -> {
                                 quizView.showSnackbar(SNACKBAR_SEND_ANSWER_FAILED_CODE);
                                 quizView.setLoadingVisibility(false);
                             }).subscribe(response -> {
-                        Cache.questions.get(currentQuestionNumber).setResult(response.result);
+                        Cache.questions.get(Cache.questions.size()-1).setResult(response.result);
                         if (response.result)
                             quizView.showSnackbar(SNACKBAR_CORRECT_ANSWER_RESULT_CODE);
                         else
@@ -105,4 +102,11 @@ public class QuizPresenter implements IQuizPresenter {
         }
         return score;
     }
+
+    @Override
+    public void recoverInstanceState() {
+        setQuestion(Cache.questions.remove(Cache.questions.size()-1));
+    }
+
+
 }

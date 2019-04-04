@@ -6,7 +6,7 @@ import teste.com.quizapp.Model.User.User;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static teste.com.quizapp.Model.User.User.VALID_USERNAME_CODE;
+import static teste.com.quizapp.Util.Constants.VALID_USERNAME_CODE;
 
 public class UserUnitTest {
 

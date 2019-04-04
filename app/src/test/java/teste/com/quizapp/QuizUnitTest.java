@@ -15,7 +15,6 @@ import teste.com.quizapp.Quiz.QuizActivity;
 import teste.com.quizapp.Util.Cache;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 
 @RunWith(MockitoJUnitRunner.class)
