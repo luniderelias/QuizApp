@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.mockito:mockito-android:2.25.1@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mockito/mockito-android/2.25.1/65f766beedbb5b4848e90ec7b5273e4f4c35b514/mockito-android-2.25.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mockito/mockito-android/2.25.1/9289ef82c2adc339e6583048b3ed13137eb24688/mockito-android-2.25.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
