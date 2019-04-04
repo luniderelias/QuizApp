@@ -10,8 +10,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import teste.com.quizapp.Login.LoginActivity;
 import teste.com.quizapp.Login.Presenter.LoginPresenter;
+import teste.com.quizapp.Model.Answer.Answer;
+import teste.com.quizapp.Model.Question.Question;
 import teste.com.quizapp.Quiz.Presenter.QuizPresenter;
 import teste.com.quizapp.Quiz.QuizActivity;
+import teste.com.quizapp.Util.Cache;
+import teste.com.quizapp.Utils.WaitUtils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuizPresenterInstrumentedTest {
@@ -30,6 +34,22 @@ public class QuizPresenterInstrumentedTest {
         // when
         subject.getNextQuestion();
         // then
+        WaitUtils.waitTime();
+        Mockito.verify(quizActivity).setHorizontalScrollQuestions();
+    }
+
+    @Test
+    public void testAnswerQuestion() {
+        // given
+        QuizPresenter subject = new QuizPresenter(quizActivity);
+        subject.getNextQuestion();
+        WaitUtils.waitTime();
+        Question question = Cache.questions.get(Cache.questions.size()-1);
+        Answer answer = new Answer(question.getOptions()[0]);
+        // when
+        subject.answerQuestion(answer);
+        // then
+        WaitUtils.waitTime();
         Mockito.verify(quizActivity).setHorizontalScrollQuestions();
     }
 }
